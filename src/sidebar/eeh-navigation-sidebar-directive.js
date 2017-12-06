@@ -117,7 +117,9 @@ function SidebarDirective($window, eehNavigation) {
                     transcludedWrapper.css('min-height', (height) + 'px');
                 }
                 var width = newValue.innerWidth > 0 ? newValue.innerWidth : $window.screen.width;
-
+                if (width >= 768 && scope.hiddenSidebar.state) {
+                  	 scope.hiddenSidebar.state = false;
+                     }
             }, true);
 
             scope.toggleSidebarTextCollapse = function () {
