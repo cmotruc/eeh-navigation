@@ -55,7 +55,8 @@ function SidebarDirective($window, eehNavigation) {
             searchInputSubmit: '=',
             sidebarCollapsedButtonIsVisible: '=?',
             sidebarIsCollapsed: '=?',
-            refresh: '=?'
+            refresh: '=?',
+            hiddenSidebar: '='
         },
         link: function (scope) {
             scope.iconBaseClass = function () {
@@ -116,25 +117,9 @@ function SidebarDirective($window, eehNavigation) {
                     transcludedWrapper.css('min-height', (height) + 'px');
                 }
                 var width = newValue.innerWidth > 0 ? newValue.innerWidth : $window.screen.width;
-                if (width >= 768 && scope.sidebarIsHidden) {
-                    //show
-                    showSideBar();
-                } else if (width < 768 && !scope.sidebarIsHidden) {
-                    hideSideBar();
-                }                
+
             }, true);
 
-            function showSideBar() {
-                scope.sidebarIsHidden = false;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.removeClass("collapse");
-            }
-            function hideSideBar() {
-                scope.sidebarIsHidden = true;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.addClass("collapse");
-            }
-            
             scope.toggleSidebarTextCollapse = function () {
                 scope.sidebarIsCollapsed = !scope.sidebarIsCollapsed;
                 setTextCollapseState();

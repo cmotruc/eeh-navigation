@@ -36,14 +36,14 @@ var NavbarDirective = function ($window, eehNavigation) {
             brandTarget: '=',
             brandSrc: '=',
             brandClick: '=',
-            refresh: '=?'
+            refresh: '=?',
+            hiddenNavbar: '='
         },
         link: function (scope) {
             scope.iconBaseClass = function () {
                 return eehNavigation.iconBaseClass();
             };
             scope.navClass = scope.navClass || 'navbar-default navbar-static-top';
-            scope.isNavbarCollapsed = true;
             scope.refresh = function () {
                 if (angular.isUndefined(scope.menuName)) {
                     return;
@@ -71,12 +71,21 @@ var NavbarDirective = function ($window, eehNavigation) {
                     return;
                 }
                 var width = (newValue.innerWidth > 0) ? newValue.innerWidth : $window.screen.width;
-                if (width >= 768) {
-                    scope.isNavbarCollapsed = true;
-                }
             }, true);
         }
     };
 };
 
 angular.module('eehNavigation').directive('eehNavigationNavbar', ['$window', 'eehNavigation', NavbarDirective]);
+angular.module('eehNavigation').controller('collapseCtrl', ['$scope', function(scope) {
+      scope.hiddenNavbarSidebar = {
+          state: true};
+          // if need save status when page reload, we can use cookies
+         // need add to parent element controller
+         // example:
+         //<parent ng-controller="collapseCtrl" >
+         //<eeh-navigation-navbar menu-name="'myNavbar'" hidden-navbar="hiddenNavbarSidebar"></eeh-navigation-navbar>
+         //<eeh-navigation-sidebar hidden-sidebar="hiddenNavbarSidebar" menu-name="'mySidebar'"></eeh-navigation-sidebar>
+         //</parent>
+
+    }]);
