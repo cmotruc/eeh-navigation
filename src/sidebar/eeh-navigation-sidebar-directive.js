@@ -56,9 +56,10 @@ function SidebarDirective($window, eehNavigation) {
             sidebarCollapsedButtonIsVisible: '=?',
             sidebarIsCollapsed: '=?',
             refresh: '=?',
-            hiddenSidebar: '='
+            hiddenSidebar: '=?hiddenSidebar'
         },
         link: function (scope) {
+          scope.hiddenSidebar = true;
             scope.iconBaseClass = function () {
                 return eehNavigation.iconBaseClass();
             };
@@ -117,8 +118,8 @@ function SidebarDirective($window, eehNavigation) {
                     transcludedWrapper.css('min-height', (height) + 'px');
                 }
                 var width = newValue.innerWidth > 0 ? newValue.innerWidth : $window.screen.width;
-                if (width >= 768 && scope.hiddenSidebar.state) {
-                  	 scope.hiddenSidebar.state = false;
+                if (width >= 768 && scope.hiddenSidebar) {
+                  	 scope.hiddenSidebar = false;
                      }
             }, true);
 
@@ -179,6 +180,9 @@ function SidebarDirective($window, eehNavigation) {
             };
 
             scope.topLevelMenuItemClickHandler = function (clickedMenuItem) {
+                if ($window.innerWidth <= 768 ) {
+                  scope.hiddenSidebar = true;
+                }
                 if (!scope.sidebarIsCollapsed || !clickedMenuItem.hasChildren()) {
                     return;
                 }

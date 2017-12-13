@@ -37,9 +37,10 @@ var NavbarDirective = function ($window, eehNavigation) {
             brandSrc: '=',
             brandClick: '=',
             refresh: '=?',
-            hiddenNavbar: '='
+            hiddenNavbar: '=?hiddenNavbar'
         },
         link: function (scope) {
+            scope.hiddenNavbar = true;
             scope.iconBaseClass = function () {
                 return eehNavigation.iconBaseClass();
             };
@@ -71,7 +72,16 @@ var NavbarDirective = function ($window, eehNavigation) {
                     return;
                 }
                 var width = (newValue.innerWidth > 0) ? newValue.innerWidth : $window.screen.width;
+                if (width >= 768 && scope.hiddenNavbar) {
+                  scope.hiddenNavbar = false;
+                }
             }, true);
+
+            scope.itemClickHandler= function () {
+              if($window.innerWidth <= 768) {
+                scope.hiddenNavbar = true;
+              }
+            }
         }
     };
 };

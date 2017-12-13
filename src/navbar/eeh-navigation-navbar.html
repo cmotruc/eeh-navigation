@@ -3,7 +3,7 @@
      role="navigation">
     <div ng-class="containerClass">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" ng-click="hiddenNavbar.state = !hiddenNavbar.state">
+            <button type="button" class="navbar-toggle" ng-click="hiddenNavbar = !hiddenNavbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -16,12 +16,13 @@
                                          src="brandSrc"
                                          click="brandClick"></eeh-navigation-navbar-brand>
         </div>
-        <div uib-collapse="hiddenNavbar.state" class="navbar-collapse">
+        <div uib-collapse="hiddenNavbar" class="navbar-collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li ng-repeat="item in leftNavbarMenuItems | orderBy:'weight'"
                     ng-attr-id="{{item.id ? item.id : 'eeh-navigation-navbar-' + item.menuItemName}}"
                     ng-include="'template/eeh-navigation/navbar-menu-item.html'"
                     ng-if="item._isVisible()"
+                    ng-click="itemClickHandler()"
                     uib-dropdown
                     ui-sref-active-eq="active"
                     eeh-navigation-active-menu-item="item">
