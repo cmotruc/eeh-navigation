@@ -90,12 +90,5 @@ angular.module('eehNavigation').directive('eehNavigationNavbar', ['$window', 'ee
 angular.module('eehNavigation').controller('collapseCtrl', ['$scope', function(scope) {
       scope.hiddenNavbarSidebar = {
           state: true};
-          // if need save status when page reload, we can use cookies
-         // need add to parent element controller
-         // example:
-         //<parent ng-controller="collapseCtrl" >
-         //<eeh-navigation-navbar menu-name="'myNavbar'" hidden-navbar="hiddenNavbarSidebar"></eeh-navigation-navbar>
-         //<eeh-navigation-sidebar hidden-sidebar="hiddenNavbarSidebar" menu-name="'mySidebar'"></eeh-navigation-sidebar>
-         //</parent>
 
     }]);
