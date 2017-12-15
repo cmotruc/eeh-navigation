@@ -55,9 +55,11 @@ function SidebarDirective($window, eehNavigation) {
             searchInputSubmit: '=',
             sidebarCollapsedButtonIsVisible: '=?',
             sidebarIsCollapsed: '=?',
-            refresh: '=?'
+            refresh: '=?',
+            hiddenSidebar: '=?hiddenSidebar'
         },
         link: function (scope) {
+          scope.hiddenSidebar = true;
             scope.iconBaseClass = function () {
                 return eehNavigation.iconBaseClass();
             };
@@ -116,25 +118,11 @@ function SidebarDirective($window, eehNavigation) {
                     transcludedWrapper.css('min-height', (height) + 'px');
                 }
                 var width = newValue.innerWidth > 0 ? newValue.innerWidth : $window.screen.width;
-                if (width >= 768 && scope.sidebarIsHidden) {
-                    //show
-                    showSideBar();
-                } else if (width < 768 && !scope.sidebarIsHidden) {
-                    hideSideBar();
-                }                
+                if (width >= 768 && scope.hiddenSidebar) {
+                  	 scope.hiddenSidebar = false;
+                     }
             }, true);
 
-            function showSideBar() {
-                scope.sidebarIsHidden = false;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.removeClass("collapse");
-            }
-            function hideSideBar() {
-                scope.sidebarIsHidden = true;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.addClass("collapse");
-            }
-            
             scope.toggleSidebarTextCollapse = function () {
                 scope.sidebarIsCollapsed = !scope.sidebarIsCollapsed;
                 setTextCollapseState();
@@ -192,6 +180,9 @@ function SidebarDirective($window, eehNavigation) {
             };
 
             scope.topLevelMenuItemClickHandler = function (clickedMenuItem) {
+                if ($window.innerWidth <= 768 ) {
+                  scope.hiddenSidebar = true;
+                }
                 if (!scope.sidebarIsCollapsed || !clickedMenuItem.hasChildren()) {
                     return;
                 }

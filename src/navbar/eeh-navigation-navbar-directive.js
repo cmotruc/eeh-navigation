@@ -36,14 +36,15 @@ var NavbarDirective = function ($window, eehNavigation) {
             brandTarget: '=',
             brandSrc: '=',
             brandClick: '=',
-            refresh: '=?'
+            refresh: '=?',
+            hiddenNavbar: '=?hiddenNavbar'
         },
         link: function (scope) {
+            scope.hiddenNavbar = true;
             scope.iconBaseClass = function () {
                 return eehNavigation.iconBaseClass();
             };
             scope.navClass = scope.navClass || 'navbar-default navbar-static-top';
-            scope.isNavbarCollapsed = true;
             scope.refresh = function () {
                 if (angular.isUndefined(scope.menuName)) {
                     return;
@@ -71,12 +72,23 @@ var NavbarDirective = function ($window, eehNavigation) {
                     return;
                 }
                 var width = (newValue.innerWidth > 0) ? newValue.innerWidth : $window.screen.width;
-                if (width >= 768) {
-                    scope.isNavbarCollapsed = true;
+                if (width >= 768 && scope.hiddenNavbar) {
+                  scope.hiddenNavbar = false;
                 }
             }, true);
+
+            scope.itemClickHandler= function () {
+              if($window.innerWidth <= 768) {
+                scope.hiddenNavbar = true;
+              }
+            }
         }
     };
 };
 
 angular.module('eehNavigation').directive('eehNavigationNavbar', ['$window', 'eehNavigation', NavbarDirective]);
+angular.module('eehNavigation').controller('collapseCtrl', ['$scope', function(scope) {
+      scope.hiddenNavbarSidebar = {
+          state: true};
+
+    }]);
