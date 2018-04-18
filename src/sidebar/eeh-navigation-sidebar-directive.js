@@ -126,13 +126,13 @@ function SidebarDirective($window, eehNavigation) {
 
             function showSideBar() {
                 scope.sidebarIsHidden = false;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.removeClass("collapse");
+                var sidebarElement = angular.element(document.querySelectorAll('.eeh-navigation-sidebar'));
+                sidebarElement.removeClass('collapse');
             }
             function hideSideBar() {
                 scope.sidebarIsHidden = true;
-                var sidebarElement = angular.element(document.querySelectorAll(".eeh-navigation-sidebar"));
-                sidebarElement.addClass("collapse");
+                var sidebarElement = angular.element(document.querySelectorAll('.eeh-navigation-sidebar'));
+                sidebarElement.addClass('collapse');
             }
             
             scope.toggleSidebarTextCollapse = function () {
